@@ -1,2 +1,0 @@
-# everSeen
-看過
