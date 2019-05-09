@@ -10,7 +10,10 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.min.js"></script>
+        {{-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.min.js"></script> --}}
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js"></script>
@@ -26,8 +29,8 @@
             </div>
         </nav>
 
-        <div class="container" id="app">
-            <div class="media my-4" v-for="(person, index) in people">
+        <div class="container" id="root">
+            {{-- <div class="media my-4" v-for="(person, index) in people">
                 <img class="mr-3" :src="'https://image.tmdb.org/t/p/w500' + person.profile_path" width="150">
                 <div class="media-body">
                     <h5 class="mt-0">名字：@{{ person.name }}</h5>
@@ -44,16 +47,57 @@
                         </div>
                     </template>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
-        <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                people: {!! $people !!}
-            }
-        })
+        <script type="text/babel">
+        function PersonList(props) {
+            const people = props.people;
+            const listItems = people.map((person) =>
+                <div className="media my-4" key={person.id.toString()}>
+                    <img className="mr-3" src={`https://image.tmdb.org/t/p/w500${person.profile_path}`} width="150" />
+
+                    <div className="media-body">
+                        <h5 className="mt-0">名字：{person.name}</h5>
+                        <h6>演過的電影：</h6>
+                        <MovieList movies={person.known_for} />,
+                    </div>
+                </div>
+            );
+
+            return (
+                <div>
+                    {listItems}
+                </div>
+            );
+        }
+
+        function MovieList(props) {
+            const movies = props.movies;
+
+            const listItems = movies.map((movie) =>
+                <div className="float-left mr-3" key={movie.id.toString()}>
+                    <img className="mr-3" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} height="100" />
+                    <div>
+                        {movie.title}
+                        <br />
+                        <span className="text-muted">at {movie.release_date}</span>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div>
+                    {listItems}
+                </div>
+            );
+        }
+
+        const people = {!! $people !!};
+        ReactDOM.render(
+            <PersonList people={people} />,
+            document.getElementById('root')
+        );
         </script>
     </body>
 </html>
