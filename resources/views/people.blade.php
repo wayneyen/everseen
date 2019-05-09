@@ -29,26 +29,7 @@
             </div>
         </nav>
 
-        <div class="container" id="root">
-            {{-- <div class="media my-4" v-for="(person, index) in people">
-                <img class="mr-3" :src="'https://image.tmdb.org/t/p/w500' + person.profile_path" width="150">
-                <div class="media-body">
-                    <h5 class="mt-0">名字：@{{ person.name }}</h5>
-
-                    <h6>演過的電影：</h6>
-                    <template v-for="(movie, index2) in person.known_for">
-                        <div v-if="movie.title" class="float-left mr-3">
-                            <img class="mr-3" :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" height="100">
-                            <div>
-                                @{{ movie.title }}
-                                <br>
-                                <span class="text-muted">at @{{ movie.release_date }}</span>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-            </div> --}}
-        </div>
+        <div class="container" id="root"></div>
 
         <script type="text/babel">
         function PersonList(props) {
