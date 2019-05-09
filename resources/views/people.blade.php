@@ -34,7 +34,7 @@
 
                     <h6>演過的電影：</h6>
                     <template v-for="(movie, index2) in person.known_for">
-                        <div v-if="movie.title" class="float-left text-center mr-3">
+                        <div v-if="movie.title" class="float-left mr-3">
                             <img class="mr-3" :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" height="100">
                             <div>
                                 @{{ movie.title }}
